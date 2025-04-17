@@ -6,6 +6,7 @@ const gameModal = document.querySelector(".game-modal");
 const playAgainBtn = gameModal.querySelector("button");
 const tutorialModal = document.querySelector(".tutorial-modal");
 const closeTutorialBtn = tutorialModal.querySelector(".close-tutorial");
+const levelSelector = document.querySelector("#level");
 
 // Initializing game variables
 let currentWord, correctLetters, wrongGuessCount;
@@ -73,6 +74,22 @@ for (let i = 97; i <= 122; i++) {
 
 closeTutorialBtn.addEventListener("click", () => {
     tutorialModal.classList.add("hidden");
+});
+
+levelSelector.addEventListener("change", () => {
+    const selectedLevel = levelSelector.value;
+    switch (selectedLevel) {
+        case "beginner":
+            wordList = beginnerWordList;
+            break;
+        case "intermediate":
+            wordList = intermediateWordList;
+            break;
+        case "advanced":
+            wordList = advancedWordList;
+            break;
+    }
+    getRandomWord(); // Reset the game with the new word list
 });
 
 document.addEventListener("DOMContentLoaded", () => {
