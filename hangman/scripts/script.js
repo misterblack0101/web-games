@@ -4,6 +4,8 @@ const keyboardDiv = document.querySelector(".keyboard");
 const hangmanImage = document.querySelector(".hangman-box img");
 const gameModal = document.querySelector(".game-modal");
 const playAgainBtn = gameModal.querySelector("button");
+const tutorialModal = document.querySelector(".tutorial-modal");
+const closeTutorialBtn = tutorialModal.querySelector(".close-tutorial");
 
 // Initializing game variables
 let currentWord, correctLetters, wrongGuessCount;
@@ -39,10 +41,10 @@ const gameOver = (isVictory) => {
 
 const initGame = (button, clickedLetter) => {
     // Checking if clickedLetter is exist on the currentWord
-    if(currentWord.includes(clickedLetter)) {
+    if (currentWord.includes(clickedLetter)) {
         // Showing all correct letters on the word display
         [...currentWord].forEach((letter, index) => {
-            if(letter === clickedLetter) {
+            if (letter === clickedLetter) {
                 correctLetters.push(letter);
                 wordDisplay.querySelectorAll("li")[index].innerText = letter;
                 wordDisplay.querySelectorAll("li")[index].classList.add("guessed");
@@ -57,8 +59,8 @@ const initGame = (button, clickedLetter) => {
     guessesText.innerText = `${wrongGuessCount} / ${maxGuesses}`;
 
     // Calling gameOver function if any of these condition meets
-    if(wrongGuessCount === maxGuesses) return gameOver(false);
-    if(correctLetters.length === currentWord.length) return gameOver(true);
+    if (wrongGuessCount === maxGuesses) return gameOver(false);
+    if (correctLetters.length === currentWord.length) return gameOver(true);
 }
 
 // Creating keyboard buttons and adding event listeners
@@ -68,6 +70,14 @@ for (let i = 97; i <= 122; i++) {
     keyboardDiv.appendChild(button);
     button.addEventListener("click", (e) => initGame(e.target, String.fromCharCode(i)));
 }
+
+closeTutorialBtn.addEventListener("click", () => {
+    tutorialModal.classList.add("hidden");
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+    tutorialModal.classList.remove("hidden");
+});
 
 getRandomWord();
 playAgainBtn.addEventListener("click", getRandomWord);
